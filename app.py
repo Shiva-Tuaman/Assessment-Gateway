@@ -2881,6 +2881,11 @@ Assessment System"""
     
 def main():
     # Initialize database
+    st.set_page_config(
+        page_title="Talent Gateway",
+        page_icon="Logo-TEL.png",  # This will use your Tuaman logo as favicon
+
+    )
     init_database()
     
     # Custom CSS
