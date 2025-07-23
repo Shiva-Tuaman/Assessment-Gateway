@@ -22,11 +22,11 @@ import os
 from io import BytesIO
 # Email configuration
 EMAIL_CONFIG = {
-    'smtp_server': 'smtp.gmail.com',
-    'smtp_port': 587,
-    'from_email': 'lukkashivacharan@gmail.com',
-    'password': 'keyd ixpg xfad cace',  # Use App Password for Gmail
-    'to_email': 'charanshiva734@gmail.com'
+    'smtp_server': st.secrets["email"]["smtp_server"],
+    'smtp_port': st.secrets["email"]["smtp_port"],
+    'from_email': st.secrets["email"]["from_email"],
+    'password': st.secrets["email"]["password"],
+    'to_email': st.secrets["email"]["to_email"]
 }
 
 def generate_assessment_pdf(user_data, scores, interpretations, overall_assessment, total_possible, user_type="employee"):
