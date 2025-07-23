@@ -28,20 +28,6 @@ EMAIL_CONFIG = {
     'password': st.secrets["email"]["password"],
     'to_email': st.secrets["email"]["to_email"]
 }
-def set_custom_title(title="Talent Gateway"):
-    """Force set custom title without Streamlit branding"""
-    st.markdown(f"""
-    <script>
-    document.title = "{title}";
-    
-    // Keep overriding any changes
-    setInterval(function() {{
-        if (document.title !== "{title}") {{
-            document.title = "{title}";
-        }}
-    }}, 1000);
-    </script>
-    """, unsafe_allow_html=True)
 def generate_assessment_pdf(user_data, scores, interpretations, overall_assessment, total_possible, user_type="employee"):
     """Generate PDF report for assessment results"""
     try:
@@ -942,7 +928,6 @@ def get_interpretation(scores, total_possible):
 def show_initial_selection():
     """Show initial selection between Existing Employee and New Candidate"""
     # Header with logo
-    set_custom_title(title="Talent Gateway")
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         try:
@@ -1076,7 +1061,6 @@ def show_initial_selection():
     """, unsafe_allow_html=True)
 
 def show_login_page():
-    set_custom_title(title="Talent Gateway")
     col1, col2, col3 = st.columns([1, 2, 1])
     with col3:
         try:
@@ -2900,39 +2884,8 @@ def main():
     st.set_page_config(
         page_title="Talent Gateway",
         page_icon="Logo-TEL.png",  # This will use your Tuaman logo as favicon
-        layout="wide",
-        initial_sidebar_state="expanded",
-        menu_items={
-            'Get Help': None,
-            'Report a bug': None,
-            'About': "Tuaman Engineering Limited - Talent Gateway Assessment Portal"
-        }
+
     )
-    
-    # JavaScript to completely override the title and remove Streamlit branding
-    st.markdown("""
-    <script>
-    // Override the title completely
-    document.title = "Talent Gateway";
-    
-    // Monitor for any title changes and override them
-    const observer = new MutationObserver(function(mutations) {
-        if (document.title !== "Talent Gateway") {
-            document.title = "Talent Gateway";
-        }
-    });
-    
-    observer.observe(document.querySelector('title'), {
-        childList: true,
-        subtree: true
-    });
-    
-    // Also set it after a short delay to ensure it sticks
-    setTimeout(function() {
-        document.title = "Talent Gateway";
-    }, 100);
-    </script>
-    """, unsafe_allow_html=True)
     init_database()
     
     # Custom CSS
