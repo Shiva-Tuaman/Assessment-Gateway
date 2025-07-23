@@ -28,6 +28,20 @@ EMAIL_CONFIG = {
     'password': st.secrets["email"]["password"],
     'to_email': st.secrets["email"]["to_email"]
 }
+def set_custom_title(title="Talent Gateway"):
+    """Force set custom title without Streamlit branding"""
+    st.markdown(f"""
+    <script>
+    document.title = "{title}";
+    
+    // Keep overriding any changes
+    setInterval(function() {{
+        if (document.title !== "{title}") {{
+            document.title = "{title}";
+        }}
+    }}, 1000);
+    </script>
+    """, unsafe_allow_html=True)
 def generate_assessment_pdf(user_data, scores, interpretations, overall_assessment, total_possible, user_type="employee"):
     """Generate PDF report for assessment results"""
     try:
@@ -928,6 +942,7 @@ def get_interpretation(scores, total_possible):
 def show_initial_selection():
     """Show initial selection between Existing Employee and New Candidate"""
     # Header with logo
+    set_custom_title(title="Talent Gateway")
     col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
         try:
@@ -1061,6 +1076,7 @@ def show_initial_selection():
     """, unsafe_allow_html=True)
 
 def show_login_page():
+    set_custom_title(title="Talent Gateway")
     col1, col2, col3 = st.columns([1, 2, 1])
     with col3:
         try:
