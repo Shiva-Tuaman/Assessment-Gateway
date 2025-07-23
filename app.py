@@ -2884,8 +2884,39 @@ def main():
     st.set_page_config(
         page_title="Talent Gateway",
         page_icon="Logo-TEL.png",  # This will use your Tuaman logo as favicon
-
+        layout="wide",
+        initial_sidebar_state="expanded",
+        menu_items={
+            'Get Help': None,
+            'Report a bug': None,
+            'About': "Tuaman Engineering Limited - Talent Gateway Assessment Portal"
+        }
     )
+    
+    # JavaScript to completely override the title and remove Streamlit branding
+    st.markdown("""
+    <script>
+    // Override the title completely
+    document.title = "Talent Gateway";
+    
+    // Monitor for any title changes and override them
+    const observer = new MutationObserver(function(mutations) {
+        if (document.title !== "Talent Gateway") {
+            document.title = "Talent Gateway";
+        }
+    });
+    
+    observer.observe(document.querySelector('title'), {
+        childList: true,
+        subtree: true
+    });
+    
+    // Also set it after a short delay to ensure it sticks
+    setTimeout(function() {
+        document.title = "Talent Gateway";
+    }, 100);
+    </script>
+    """, unsafe_allow_html=True)
     init_database()
     
     # Custom CSS
