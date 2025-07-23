@@ -28,7 +28,6 @@ EMAIL_CONFIG = {
     'password': st.secrets["email"]["password"],
     'to_email': st.secrets["email"]["to_email"]
 }
-
 def generate_assessment_pdf(user_data, scores, interpretations, overall_assessment, total_possible, user_type="employee"):
     """Generate PDF report for assessment results"""
     try:
@@ -1973,39 +1972,7 @@ Assessment System"""
                 st.warning("⚠️ Assessment saved but email notification failed. HR team will be notified separately.")
         else:
             st.warning("⚠️ Assessment saved but PDF generation failed. HR team will be notified separately.")
-def test_email_connection():
-    """Test email connection and configuration"""
-    try:
-        server = smtplib.SMTP(EMAIL_CONFIG['smtp_server'], EMAIL_CONFIG['smtp_port'])
-        server()
-        server.login(EMAIL_CONFIG['from_email'], EMAIL_CONFIG['password'])
-        server.quit()
-        return True, "Email connection successful"
-    except Exception as e:
-        return False, f"Email connection failed: {str(e)}"
 
-def send_simple_test_email():
-    """Send a simple test email without attachment"""
-    try:
-        msg = MIMEMultipart()
-        msg['From'] = EMAIL_CONFIG['from_email']
-        msg['To'] = EMAIL_CONFIG['to_email']
-        msg['Subject'] = "Test Email from Assessment System"
-        
-        body = "This is a test email from the Tuaman Engineering Assessment System."
-        msg.attach(MIMEText(body, 'plain'))
-        
-        server = smtplib.SMTP(EMAIL_CONFIG['smtp_server'], EMAIL_CONFIG['smtp_port'])
-        server.starttls()
-        server.login(EMAIL_CONFIG['from_email'], EMAIL_CONFIG['password'])
-        text = msg.as_string()
-        server.sendmail(EMAIL_CONFIG['from_email'], [EMAIL_CONFIG['to_email']], text)
-        server.quit()
-        
-        return True
-    except Exception as e:
-        st.error(f"Test email failed: {str(e)}")
-        return False
 def show_candidate_assessment_page():
     """Assessment page for candidates"""
     user = st.session_state.user
@@ -2797,7 +2764,7 @@ def show_records_page():
     # Style the dataframe to highlight low performers (< 60%) in RED
     def highlight_low_performers(row):
         if row['percentage'] < 60:
-            return ['background-color: #ffcccc; color: #cc0000; font-weight: bold'] * len(row)
+            return ['background-color: #ffcccc; color: #cc0000;'] * len(row)
         else:
             return [''] * len(row)
     
